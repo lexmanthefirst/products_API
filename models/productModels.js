@@ -1,14 +1,17 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const productSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Please enter a product name"],
+      required: [true, 'Please enter a product name'],
+      trim: true,
+      maxlenght: [50, 'Product name cannot exceed 50 characters'],
     },
     quantity: {
       type: Number,
       required: true,
       default: 0,
+      min: [0, 'Quantity cannot be less than 0'],
     },
     price: {
       type: Number,
@@ -21,8 +24,8 @@ const productSchema = mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-const Product = mongoose.model("Product", productSchema);
+const Product = mongoose.model('products', productSchema);
 module.exports = Product;

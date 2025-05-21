@@ -1,37 +1,70 @@
-const Product = require("../models/productModels");
-const asyncHandler = require("express-async-handler");
+const Product = require('../models/productModels');
+const asyncHandler = require('express-async-handler');
 
 //Getting all products
 const getProducts = asyncHandler(async (req, res) => {
   try {
     const products = await Product.find({});
-    res.status(200).json(products);
+    res.status(200).json({
+      success: true,
+      count: products.length,
+      message: 'Products fetched successfully',
+      data: products,
+    });
   } catch (error) {
-    res.status(500);
+    res.status(500).json({
+      success: false,
+      error: 'Server Error',
+    });
     throw new Error(error.message);
   }
 });
 
 //Getting a single product by ID
 const getProduct = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const { id } = req.params;
     const product = await Product.findById(id);
-    res.status(200).json(product);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        error: 'Product not found',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: product,
+    });
   } catch (error) {
-    res.status(500);
-    throw new Error(error.message);
+    res.status(500).json({
+      success: false,
+      error: 'Server Error',
+    });
   }
 });
-
 //Creating a product
 const createProduct = asyncHandler(async (req, res) => {
   try {
     const product = await Product.create(req.body);
-    res.status(200).json(product);
+    res.status(201).json({
+      success: true,
+      data: product,
+    });
   } catch (error) {
-    res.status(500);
-    throw new Error(error.message);
+    if (error.name === 'ValidationError') {
+      res.status(400).json({
+        success: false,
+        error: error.message,
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        error: 'Server Error',
+      });
+    }
   }
 });
 
