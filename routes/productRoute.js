@@ -1,6 +1,5 @@
 const express = require('express');
 const router = new express.Router();
-const Product = require('../models/productModels');
 const Util = require('../util');
 const productValidation = require('../util/product-validation');
 const productController = require('../controllers/productController');
@@ -28,7 +27,7 @@ const productController = require('../controllers/productController');
  *               items:
  *                 $ref: '#/components/schemas/Product'
  */
-router.get('/', Util.handleErrors(productController.getProducts));
+router.get('/', Util.handleErrors(productController.getAll));
 
 /**
  * @swagger
@@ -53,7 +52,7 @@ router.get('/', Util.handleErrors(productController.getProducts));
  *       404:
  *         description: Product not found
  */
-router.get('/:id', Util.handleErrors(productController.getProduct));
+router.get('/:id', Util.handleErrors(productController.getById));
 
 /**
  * @swagger
@@ -80,7 +79,7 @@ router.get('/:id', Util.handleErrors(productController.getProduct));
 router.post(
   '/',
   productValidation.productValidationRules(),
-  Util.handleErrors(productController.createProduct),
+  Util.handleErrors(productController.createOne),
 );
 
 /**
@@ -115,7 +114,7 @@ router.post(
 router.put(
   '/:id',
   productValidation.productValidationRules(),
-  Util.handleErrors(productController.updateProduct),
+  Util.handleErrors(productController.update),
 );
 
 /**
@@ -137,6 +136,6 @@ router.put(
  *       404:
  *         description: Product not found
  */
-router.delete('/:id', Util.handleErrors(productController.deleteProduct));
+router.delete('/:id', Util.handleErrors(productController.delete));
 
 module.exports = router;
