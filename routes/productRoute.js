@@ -134,7 +134,7 @@ router.put(
  *       200:
  *         description: Product deleted
  *       404:
- *         description: Product not found
+ *         description: Oops! Product not found
  */
 router.delete('/:id', Util.handleErrors(productController.delete));
 
