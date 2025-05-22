@@ -18,6 +18,7 @@ app.use('/products', productRoute);
 app.use('/api/v1/products', productRoute);
 
 app.use(errorMiddleware);
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
