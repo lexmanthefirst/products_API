@@ -81,60 +81,6 @@ router.post(
   productValidation.productValidationRules(),
   Util.handleErrors(productController.createOne),
 );
-/**
- * @swagger
- * /products:
- *   post:
- *     summary: Create Multiple product
- *     tags: [Products]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Product'
- *     responses:
- *       201:
- *         description: Products created
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Product'
- *       400:
- *         description: Validation error
- */
-router.post(
-  '/',
-  productValidation.productValidationRules(),
-  Util.handleErrors(productController.createMany),
-);
-/**
- * @swagger
- * /products:
- *   post:
- *     summary: Create a new product
- *     tags: [Products]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Product'
- *     responses:
- *       201:
- *         description: Product created
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Product'
- *       400:
- *         description: Validation error
- */
-router.post(
-  '/',
-  productValidation.productValidationRules(),
-  Util.handleErrors(productController.createOne),
-);
 
 /**
  * @swagger

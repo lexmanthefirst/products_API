@@ -25,10 +25,11 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Internal Server Error' });
 });
 
-const PORT = process.env.PORT || 5500;
 // Swagger setup
 setupSwagger(app);
+
 // Create server
+const PORT = process.env.PORT || 5500;
 async function startServer() {
   try {
     await connectDB();

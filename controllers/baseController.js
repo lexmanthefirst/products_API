@@ -44,6 +44,7 @@ class BaseController {
     });
   }
 
+  //createMany
   async createMany(req, res) {
     const documents = await this.model.insertMany(req.body);
     res.status(201).json({
