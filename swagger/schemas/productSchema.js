@@ -39,18 +39,18 @@ module.exports = {
         example: 'https://example.com/image.jpg',
       },
     ],
-    createdAt: {
-      type: 'string',
-      format: 'date-time',
-      description: 'The date the product was created',
-      readOnly: true,
-    },
     rating: {
       type: 'number',
       description: 'The rating of the product',
       example: 4.5,
       minimum: 0,
       maximum: 5,
+    },
+    createdAt: {
+      type: 'string',
+      format: 'date-time',
+      description: 'The date the product was created',
+      readOnly: true,
     },
     updatedAt: {
       type: 'string',

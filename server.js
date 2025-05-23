@@ -3,6 +3,7 @@ const cors = require('cors');
 const express = require('express');
 const connectDB = require('./database/connect');
 const productRoute = require('./routes/productRoute');
+const userRoute = require('./routes/userRoute');
 const errorMiddleware = require('./middleware/errorMiddleware');
 const setupSwagger = require('./swagger/swagger-config');
 
@@ -15,7 +16,9 @@ app.use(express.urlencoded({ extended: false }));
 
 //routes
 app.use('/products', productRoute);
+app.use('/users', userRoute);
 app.use('/api/v1/products', productRoute);
+app.use('/api/v1/users', userRoute);
 
 app.use(errorMiddleware);
 

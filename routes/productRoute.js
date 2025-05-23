@@ -79,6 +79,7 @@ router.get('/:id', Util.handleErrors(productController.getById));
 router.post(
   '/',
   productValidation.productValidationRules(),
+  productValidation.ValidateProduct,
   Util.handleErrors(productController.createOne),
 );
 
@@ -114,6 +115,7 @@ router.post(
 router.put(
   '/:id',
   productValidation.productValidationRules(),
+  productValidation.ValidateProduct,
   Util.handleErrors(productController.update),
 );
 

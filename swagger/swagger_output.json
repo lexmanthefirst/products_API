@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Products API",
-    "description": "API for product information for an ecommerce website",
+    "title": "Ecommerce API",
+    "description": "Complete API for e-commerce website with products, users, orders, carts, reviews, and categories",
     "version": "1.0.0"
   },
   "host": "localhost:3000",
@@ -23,8 +23,8 @@
       "post": {
         "description": "",
         "responses": {
-          "default": {
-            "description": ""
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -57,8 +57,8 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "400": {
+            "description": "Bad Request"
           }
         }
       },
@@ -82,71 +82,140 @@
   },
   "components": {
     "schemas": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string",
-          "description": "The auto-generated id of the product",
-          "readOnly": true
-        },
-        "name": {
-          "type": "string",
-          "description": "The name of the product",
-          "example": "Apple iPhone 13"
-        },
-        "description": {
-          "type": "string",
-          "description": "The description of the product",
-          "example": "Latest model of Apple iPhone with A15 Bionic chip"
-        },
-        "quantity": {
-          "type": "number",
-          "description": "The quantity of the product in cart",
-          "example": 5
-        },
-        "category": {
-          "type": "string",
-          "description": "The category of the product",
-          "example": "Electronics"
-        },
-        "price": {
-          "type": "number",
-          "description": "The price of the product",
-          "example": 999.99
-        },
-        "image": [
-          {
+      "productSchema": {
+        "type": "object",
+        "properties": {
+          "_id": {
             "type": "string",
-            "description": "The URL of the product image",
-            "example": "https://example.com/image.jpg"
+            "description": "The auto-generated id of the product",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the product",
+            "example": "Apple iPhone 13"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the product",
+            "example": "Latest model of Apple iPhone with A15 Bionic chip"
+          },
+          "quantity": {
+            "type": "number",
+            "description": "The quantity of the product in cart",
+            "example": 5
+          },
+          "category": {
+            "type": "string",
+            "description": "The category of the product",
+            "example": "Electronics"
+          },
+          "price": {
+            "type": "number",
+            "description": "The price of the product",
+            "example": 999.99
+          },
+          "image": [
+            {
+              "type": "string",
+              "description": "The URL of the product image",
+              "example": "https://example.com/image.jpg"
+            }
+          ],
+          "rating": {
+            "type": "number",
+            "description": "The rating of the product",
+            "example": 4.5,
+            "minimum": 0,
+            "maximum": 5
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date the product was created",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date the product was last updated",
+            "readOnly": true
           }
-        ],
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "description": "The date the product was created",
-          "readOnly": true
         },
-        "rating": {
-          "type": "number",
-          "description": "The rating of the product",
-          "example": 4.5,
-          "minimum": 0,
-          "maximum": 5
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "description": "The date the product was last updated",
-          "readOnly": true
-        }
+        "required": [
+          "name",
+          "quantity",
+          "price",
+          "image"
+        ]
       },
-      "required": [
-        "name",
-        "quantity",
-        "price",
-        "image"
-      ]
+      "userSchema": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "The auto-generated id of the user",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the user",
+            "example": "Solomon Grundy"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email of the user",
+            "example": "exaple@user.com"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "admin"
+            ],
+            "description": "The role of the user",
+            "example": "user"
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "zip": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              }
+            },
+            "example": "123 Applebay street"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date the product was created",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date the product was last updated",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "address"
+        ]
+      }
     }
   }
 }

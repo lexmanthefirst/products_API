@@ -1,14 +1,16 @@
 const swaggerDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const productSchema = require('./schemas/productSchema');
+const userSchema = require('./schemas/userSchema');
 
 const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Product information API for ecom website',
+      title: 'API for ecom website',
       version: '1.0.0',
-      description: 'API for product information',
+      description:
+        'Complete API for e-commerce website with products, users, orders, carts, reviews, and categories',
     },
     servers: [
       {
@@ -19,6 +21,7 @@ const options = {
     components: {
       schemas: {
         Product: productSchema,
+        User: userSchema,
       },
     },
   },

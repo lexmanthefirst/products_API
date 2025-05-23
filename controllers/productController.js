@@ -1,4 +1,4 @@
-const BaseController = require('./BaseController');
+const BaseController = require('./baseController');
 const Product = require('../models/productModel');
 
 class ProductController extends BaseController {
