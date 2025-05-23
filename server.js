@@ -21,13 +21,6 @@ app.use('/api/v1/products', productRoute);
 app.use('/api/v1/users', userRoute);
 
 app.use(errorMiddleware);
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Internal Server Error' });
-});
-
 // Swagger setup
 setupSwagger(app);
 
