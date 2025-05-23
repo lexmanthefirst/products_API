@@ -32,7 +32,7 @@ app.use((err, req, res, next) => {
 setupSwagger(app);
 
 // Create server
-const PORT = process.env.PORT || 5500;
+const PORT = process.env.PORT;
 async function startServer() {
   try {
     await connectDB();

@@ -28,8 +28,6 @@ validate.userValidationRules = () => {
       .withMessage('Address is required')
       .isObject()
       .withMessage('Address must be an object'),
-
-    body('image').optional().isURL().withMessage('Image must be a valid URL'),
   ];
 };
 

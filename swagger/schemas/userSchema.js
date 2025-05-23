@@ -37,13 +37,13 @@ module.exports = {
     createdAt: {
       type: 'string',
       format: 'date-time',
-      description: 'The date the product was created',
+      description: 'The date the user was created',
       readOnly: true,
     },
     updatedAt: {
       type: 'string',
       format: 'date-time',
-      description: 'The date the product was last updated',
+      description: 'The date the user was last updated',
       readOnly: true,
     },
   },
