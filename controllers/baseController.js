@@ -16,6 +16,10 @@ class BaseController {
 
   async getAll(req, res) {
     const documents = await this.model.find();
+    if (!documents) {
+      res.status(404);
+      throw new Error('No documents found');
+    }
     res.status(200).json({
       success: true,
       count: documents.length,
@@ -38,6 +42,10 @@ class BaseController {
 
   async createOne(req, res) {
     const document = await this.model.create(req.body);
+    if (!document) {
+      res.status(400);
+      throw new Error('Invalid data');
+    }
     res.status(201).json({
       success: true,
       data: document,
