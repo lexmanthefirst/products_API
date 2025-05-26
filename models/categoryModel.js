@@ -19,7 +19,7 @@ const categorySchema = mongoose.Schema(
       trim: true,
     },
     parentCategory: {
-      type: string,
+      type: String,
       ref: 'category',
       default: null,
     },
