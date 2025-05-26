@@ -15,8 +15,8 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000/api/v1',
-        // url: 'https://products-api-8a3v.onrender.com/api/v1',
+        // url: 'http://localhost:3000/api/v1',
+        url: 'https://products-api-5zdk.onrender.com/api-docs',
       },
     ],
     components: {
