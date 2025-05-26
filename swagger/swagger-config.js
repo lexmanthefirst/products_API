@@ -2,6 +2,7 @@ const swaggerDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const productSchema = require('./schemas/productSchema');
 const userSchema = require('./schemas/userSchema');
+const categorySchema = require('./schemas/categorySchema');
 
 const options = {
   definition: {
@@ -22,6 +23,7 @@ const options = {
       schemas: {
         Product: productSchema,
         User: userSchema,
+        Category: categorySchema,
       },
     },
   },

@@ -2,8 +2,7 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const connectDB = require('./database/connect');
-const productRoute = require('./routes/productRoute');
-const userRoute = require('./routes/userRoute');
+const routes = require('./routes');
 const errorMiddleware = require('./middleware/errorMiddleware');
 const setupSwagger = require('./swagger/swagger-config');
 
@@ -15,17 +14,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //routes
-app.use('/products', productRoute);
-app.use('/users', userRoute);
-app.use('/api/v1/products', productRoute);
-app.use('/api/v1/users', userRoute);
+app.use('/api/v1', routes);
 
+// Error handling middleware and swagger setup
 app.use(errorMiddleware);
-// Swagger setup
 setupSwagger(app);
 
 // Create server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 async function startServer() {
   try {
     await connectDB();

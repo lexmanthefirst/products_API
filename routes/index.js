@@ -1,9 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const productRoutes = require('./productRoute');
-const userRoutes = require('./userRoute');
 
-router.use('/products', productRoutes);
-router.use('/users', userRoutes);
+// Imported route modules
+const productRoute = require('./productRoute');
+const userRoute = require('./userRoute');
+const categoryRoute = require('./categoryRoute');
+
+//Base routes for each module
+router.use('/products', productRoute);
+router.use('/users', userRoute);
+router.use('/categories', categoryRoute);
 
 module.exports = router;
