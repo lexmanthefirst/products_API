@@ -20,8 +20,9 @@ const categorySchema = mongoose.Schema(
     },
     parentCategory: {
       type: String,
-      ref: 'category',
-      default: null,
+      required: [true, 'Please enter a parent category'],
+      maxlength: 50,
+      trim: true,
     },
     isActive: {
       type: Boolean,
