@@ -34,7 +34,7 @@ validate.categoryValidationRules = () => {
     body('parentCategory')
       .optional()
       .isMongoId()
-      .withMessage('Parent category must be a valid MongoDB ID'),
+      .withMessage('parent Category must be at least 3 characters long'),
 
     body('isActive')
       .optional()
