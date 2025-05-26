@@ -32,17 +32,18 @@ validate.categoryValidationRules = () => {
         }
       }),
     body('parentCategory')
-      .optional()
-      .isMongoId()
+      .notEmpty()
+      .withMessage('Parent Category is required')
+      .isLength({ min: 3 })
       .withMessage('parent Category must be at least 3 characters long'),
 
     body('isActive')
-      .optional()
       .isBoolean()
       .withMessage('isActive must be a boolean value'),
 
     body('featuredImage')
-      .optional()
+      .notEmpty()
+      .withMessage('Featured image is required')
       .isURL()
       .withMessage('Featured image must be a valid URL'),
   ];
