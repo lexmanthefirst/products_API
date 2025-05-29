@@ -3,7 +3,8 @@ const outputFile = './swagger/swagger_output.json';
 const endpointsFiles = [
   './routes/productRoute',
   './routes/userRoute',
-  './routes/categporyRoute',
+  './routes/categoryRoute',
+  './routes/authRoute',
 ];
 const path = require('path');
 
@@ -29,7 +30,28 @@ const config = {
   schemes: ['http'],
   components: {
     schemas: schemas,
+    securitySchemes: {
+      GitHubOauth: {
+        type: 'oauth2',
+        flows: {
+          authorizationCode: {
+            // Changed from implicit to authorizationCode
+            authorizationUrl: 'https://github.com/login/oauth/authorize',
+            tokenUrl: 'https://github.com/login/oauth/access_token',
+            scopes: {
+              user: 'Access user data',
+              products: 'Access product data',
+              categories: 'Access category data',
+            },
+          },
+        },
+      },
+    },
   },
+  security: [
+    {
+      GitHubOauth: ['user', 'products', 'categories'],
+    },
+  ],
 };
-
 swaggerAutogen(outputFile, endpointsFiles, config);
