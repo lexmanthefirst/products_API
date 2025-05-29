@@ -2,19 +2,6 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 
-/**
- * @swagger
- * /auth/github:
- *   get:
- *     tags: [Auth]
- *     summary: Login with GitHub (OAuth2)
- *     description: Initiates GitHub OAuth2 flow
- *     security:
- *       - GitHubOAuth: []  # Reference the security scheme
- *     responses:
- *       302:
- *         description: Redirects to GitHub for authentication
- */
 //login with GitHub
 router.get('/github', passport.authenticate('github'));
 

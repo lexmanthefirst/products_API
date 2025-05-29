@@ -17,7 +17,6 @@ const options = {
     servers: [
       {
         url: 'http://localhost:3000/api/v1',
-        // url: 'https://products-api-5zdk.onrender.com/api/v1',
       },
     ],
     components: {
@@ -27,21 +26,28 @@ const options = {
         Category: categorySchema,
       },
       securitySchemes: {
-        GitHubOauth: {
+        GitHubOAuth: {
           type: 'oauth2',
           flows: {
             authorizationCode: {
-              authorizationUrl: 'https://github.com/login/oauth/authorize',
-              tokenUrl: 'https://github.com/login/oauth/access_token',
-
+              authorizationUrl: 'http://localhost:3000/api/v1/auth/github',
+              tokenUrl: 'http://localhost:3000/api/v1/auth/github/callback',
               scopes: {
                 user: 'Access user profile',
+                products: 'Access product data',
+                categories: 'Access category data',
               },
+              refreshUrl: 'http://localhost:3000/api/v1/auth/github/callback',
             },
           },
         },
       },
     },
+    security: [
+      {
+        GitHubOAuth: ['user'],
+      }
+    ],
   },
   apis: ['./routes/*.js'],
 };
@@ -54,12 +60,14 @@ module.exports = app => {
     swaggerUi.serve,
     swaggerUi.setup(specs, {
       swaggerOptions: {
-        oauthRedirectUrl: `${process.env.BASE_URL}/api-docs/oauth2-redirect.html`,
         oauth: {
           clientId: process.env.GITHUB_CLIENT_ID,
           clientSecret: process.env.GITHUB_CLIENT_SECRET,
           scopes: ['user'],
+          usePkceWithAuthorizationCodeGrant: true,
+          redirectUrl: 'http://localhost:3000/api-docs/oauth2-redirect.html'
         },
+        url: 'http://localhost:3000/api-docs.json'
       },
     }),
   );
