@@ -21,13 +21,19 @@ schemaFiles.forEach(file => {
 });
 
 const config = {
+  openapi: '3.0.0',
   info: {
     title: 'Ecommerce API',
     description:
       'Complete API for e-commerce website with products, users, orders, carts, reviews, and categories',
+    version: '1.0.0',
   },
-  host: 'localhost:3000',
-  schemes: ['http'],
+  servers: [
+    {
+      url: 'http://localhost:3000/api/v1',
+      description: 'Local server',
+    },
+  ],
   components: {
     schemas: schemas,
     securitySchemes: {
@@ -35,9 +41,9 @@ const config = {
         type: 'oauth2',
         flows: {
           authorizationCode: {
-            // Changed from implicit to authorizationCode
-            authorizationUrl: 'https://github.com/login/oauth/authorize',
-            tokenUrl: 'https://github.com/login/oauth/access_token',
+            authorizationUrl: 'http://localhost:3000/api/v1/auth/github',
+            tokenUrl: 'http://localhost:3000/api/v1/auth/github/callback',
+            refreshUrl: 'http://localhost:3000/api/v1/auth/github/callback',
             scopes: {
               user: 'Access user data',
               products: 'Access product data',
@@ -50,7 +56,7 @@ const config = {
   },
   security: [
     {
-      GitHubOauth: ['user', 'products', 'categories'],
+      GitHubOauth: ['user'],
     },
   ],
 };

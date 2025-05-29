@@ -1,13 +1,17 @@
 {
   "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
     "title": "Ecommerce API",
     "description": "Complete API for e-commerce website with products, users, orders, carts, reviews, and categories",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
-  "basePath": "/",
-  "schemes": ["http"],
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Local server"
+    }
+  ],
   "paths": {
     "/": {
       "get": {
@@ -119,186 +123,622 @@
       "categorySchema": {
         "type": "object",
         "properties": {
-          "_id": {
+          "type": {
             "type": "string",
-            "example": "507f1f77bcf86cd799439012",
-            "description": "Auto-generated ID of the category"
+            "example": "object"
           },
-          "name": {
-            "type": "string",
-            "required": true,
-            "example": "Electronics",
-            "description": "Unique category name"
+          "properties": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "507f1f77bcf86cd799439012"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Auto-generated ID of the category"
+                  }
+                }
+              },
+              "name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "required": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Electronics"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Unique category name"
+                  }
+                }
+              },
+              "description": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Devices and gadgets"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Brief category description"
+                  }
+                }
+              },
+              "slug": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "electronics"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "URL-friendly version of name"
+                  }
+                }
+              },
+              "parentCategory": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Computers"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Reference to parent category (for hierarchies)"
+                  }
+                }
+              },
+              "isActive": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "boolean"
+                  },
+                  "default": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "example": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Toggle category visibility"
+                  }
+                }
+              },
+              "featuredImage": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "https://example.com/cat-electronics.jpg"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Main category image URL"
+                  }
+                }
+              },
+              "createdAt": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "2023-01-01T00:00:00Z"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Auto-generated creation timestamp"
+                  }
+                }
+              },
+              "updatedAt": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "2023-01-02T00:00:00Z"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Auto-generated update timestamp"
+                  }
+                }
+              }
+            }
           },
-          "description": {
-            "type": "string",
-            "example": "Devices and gadgets",
-            "description": "Brief category description"
-          },
-          "slug": {
-            "type": "string",
-            "example": "electronics",
-            "description": "URL-friendly version of name"
-          },
-          "parentCategory": {
-            "type": "string",
-            "example": "Computers",
-            "description": "Reference to parent category (for hierarchies)"
-          },
-          "isActive": {
-            "type": "boolean",
-            "default": true,
-            "example": true,
-            "description": "Toggle category visibility"
-          },
-          "featuredImage": {
-            "type": "string",
-            "example": "https://example.com/cat-electronics.jpg",
-            "description": "Main category image URL"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2023-01-01T00:00:00Z",
-            "description": "Auto-generated creation timestamp"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2023-01-02T00:00:00Z",
-            "description": "Auto-generated update timestamp"
+          "required": {
+            "type": "array",
+            "example": [
+              "name",
+              "description",
+              "slug",
+              "parentCategory",
+              "isActive",
+              "featuredImage"
+            ],
+            "items": {
+              "type": "string"
+            }
           }
-        },
-        "required": [
-          "name",
-          "description",
-          "slug",
-          "parentCategory",
-          "isActive",
-          "featuredImage"
-        ]
+        }
       },
       "productSchema": {
         "type": "object",
         "properties": {
-          "_id": {
+          "type": {
             "type": "string",
-            "description": "The auto-generated id of the product",
-            "readOnly": true
+            "example": "object"
           },
-          "name": {
-            "type": "string",
-            "description": "The name of the product",
-            "example": "Apple iPhone 13"
-          },
-          "description": {
-            "type": "string",
-            "description": "The description of the product",
-            "example": "Latest model of Apple iPhone with A15 Bionic chip"
-          },
-          "quantity": {
-            "type": "number",
-            "description": "The quantity of the product in cart",
-            "example": 5
-          },
-          "category": {
-            "type": "string",
-            "description": "The category of the product",
-            "example": "Electronics"
-          },
-          "price": {
-            "type": "number",
-            "description": "The price of the product",
-            "example": 999.99
-          },
-          "image": [
-            {
-              "type": "string",
-              "description": "The URL of the product image",
-              "example": "https://example.com/image.jpg"
+          "properties": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The auto-generated id of the product"
+                  },
+                  "readOnly": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              },
+              "name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The name of the product"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Apple iPhone 13"
+                  }
+                }
+              },
+              "description": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The description of the product"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Latest model of Apple iPhone with A15 Bionic chip"
+                  }
+                }
+              },
+              "quantity": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "number"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The quantity of the product in cart"
+                  },
+                  "example": {
+                    "type": "number",
+                    "example": 5
+                  }
+                }
+              },
+              "category": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The category of the product"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Electronics"
+                  }
+                }
+              },
+              "price": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "number"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The price of the product"
+                  },
+                  "example": {
+                    "type": "number",
+                    "example": 999.99
+                  }
+                }
+              },
+              "image": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "The URL of the product image"
+                    },
+                    "example": {
+                      "type": "string",
+                      "example": "https://example.com/image.jpg"
+                    }
+                  }
+                }
+              },
+              "rating": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "number"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The rating of the product"
+                  },
+                  "example": {
+                    "type": "number",
+                    "example": 4.5
+                  },
+                  "minimum": {
+                    "type": "number",
+                    "example": 0
+                  },
+                  "maximum": {
+                    "type": "number",
+                    "example": 5
+                  }
+                }
+              },
+              "createdAt": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The date the product was created"
+                  },
+                  "readOnly": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              },
+              "updatedAt": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The date the product was last updated"
+                  },
+                  "readOnly": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
             }
-          ],
-          "rating": {
-            "type": "number",
-            "description": "The rating of the product",
-            "example": 4.5,
-            "minimum": 0,
-            "maximum": 5
           },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date the product was created",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date the product was last updated",
-            "readOnly": true
+          "required": {
+            "type": "array",
+            "example": [
+              "name",
+              "quantity",
+              "price",
+              "image"
+            ],
+            "items": {
+              "type": "string"
+            }
           }
-        },
-        "required": ["name", "quantity", "price", "image"]
+        }
       },
       "userSchema": {
         "type": "object",
         "properties": {
-          "_id": {
+          "type": {
             "type": "string",
-            "description": "The auto-generated id of the user",
-            "readOnly": true
+            "example": "object"
           },
-          "name": {
-            "type": "string",
-            "description": "The name of the user",
-            "example": "Solomon Grundy"
-          },
-          "email": {
-            "type": "string",
-            "description": "Email of the user",
-            "example": "exaple@user.com"
-          },
-          "role": {
-            "type": "string",
-            "enum": ["user", "admin"],
-            "description": "The role of the user",
-            "example": "user"
-          },
-          "address": {
+          "properties": {
             "type": "object",
             "properties": {
-              "street": {
-                "type": "string"
+              "_id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The auto-generated id of the user"
+                  },
+                  "readOnly": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
               },
-              "city": {
-                "type": "string"
+              "name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The name of the user"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Solomon Grundy"
+                  }
+                }
               },
-              "state": {
-                "type": "string"
+              "email": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Email of the user"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "exaple@user.com"
+                  }
+                }
               },
-              "zip": {
-                "type": "string"
+              "role": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "enum": {
+                    "type": "array",
+                    "example": [
+                      "user",
+                      "admin"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The role of the user"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "user"
+                  }
+                }
               },
-              "country": {
-                "type": "string"
+              "address": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "object"
+                  },
+                  "properties": {
+                    "type": "object",
+                    "properties": {
+                      "street": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "string"
+                          }
+                        }
+                      },
+                      "city": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "string"
+                          }
+                        }
+                      },
+                      "state": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "string"
+                          }
+                        }
+                      },
+                      "zip": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "string"
+                          }
+                        }
+                      },
+                      "country": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "123 Applebay street"
+                  }
+                }
+              },
+              "createdAt": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The date the user was created"
+                  },
+                  "readOnly": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              },
+              "updatedAt": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The date the user was last updated"
+                  },
+                  "readOnly": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
               }
-            },
-            "example": "123 Applebay street"
+            }
           },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date the user was created",
-            "readOnly": true
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date the user was last updated",
-            "readOnly": true
+          "required": {
+            "type": "array",
+            "example": [
+              "name",
+              "email",
+              "address"
+            ],
+            "items": {
+              "type": "string"
+            }
           }
-        },
-        "required": ["name", "email", "address"]
+        }
       }
     },
     "securitySchemes": {
@@ -306,8 +746,9 @@
         "type": "oauth2",
         "flows": {
           "authorizationCode": {
-            "authorizationUrl": "https://github.com/login/oauth/authorize",
-            "tokenUrl": "https://github.com/login/oauth/access_token",
+            "authorizationUrl": "http://localhost:3000/api/v1/auth/github",
+            "tokenUrl": "http://localhost:3000/api/v1/auth/github/callback",
+            "refreshUrl": "http://localhost:3000/api/v1/auth/github/callback",
             "scopes": {
               "user": "Access user data",
               "products": "Access product data",
@@ -320,7 +761,9 @@
   },
   "security": [
     {
-      "GitHubOauth": ["user", "products", "categories"]
+      "GitHubOauth": [
+        "user"
+      ]
     }
   ]
 }
