@@ -3,6 +3,7 @@ const router = express.Router();
 const Util = require('../util');
 const userValidation = require('../util/user-validation');
 const userController = require('../controllers/userController');
+const { isAuthenticated } = require('../middleware/authenticate');
 
 /**
  * @swagger
@@ -80,6 +81,7 @@ router.post(
   '/',
   userValidation.userValidationRules(),
   userValidation.ValidateUser,
+  isAuthenticated,
   Util.handleErrors(userController.createOne),
 );
 
@@ -116,6 +118,7 @@ router.put(
   '/:id',
   userValidation.userValidationRules(),
   userValidation.ValidateUser,
+  isAuthenticated,
   Util.handleErrors(userController.update),
 );
 
@@ -138,6 +141,10 @@ router.put(
  *       404:
  *         description: User not found
  */
-router.delete('/:id', Util.handleErrors(userController.delete));
+router.delete(
+  '/:id',
+  isAuthenticated,
+  Util.handleErrors(userController.delete),
+);
 
 module.exports = router;

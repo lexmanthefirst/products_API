@@ -3,6 +3,7 @@ const router = express.Router();
 const Util = require('../util');
 const categoryValidation = require('../util/category-validation');
 const categoryController = require('../controllers/categoryController');
+const { isAuthenticated } = require('../middleware/authenticate');
 
 /**
  * @swagger
@@ -80,6 +81,7 @@ router.post(
   '/',
   categoryValidation.categoryValidationRules(),
   categoryValidation.ValidateCategory,
+  isAuthenticated,
   Util.handleErrors(categoryController.createOne),
 );
 
@@ -116,6 +118,7 @@ router.put(
   '/:id',
   categoryValidation.categoryValidationRules(),
   categoryValidation.ValidateCategory,
+  isAuthenticated,
   Util.handleErrors(categoryController.update),
 );
 
@@ -138,6 +141,10 @@ router.put(
  *       404:
  *         description: Category not found
  */
-router.delete('/:id', Util.handleErrors(categoryController.delete));
+router.delete(
+  '/:id',
+  isAuthenticated,
+  Util.handleErrors(categoryController.delete),
+);
 
 module.exports = router;

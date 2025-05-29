@@ -3,6 +3,7 @@ const router = new express.Router();
 const Util = require('../util');
 const productValidation = require('../util/product-validation');
 const productController = require('../controllers/productController');
+const { isAuthenticated } = require('../middleware/authenticate');
 
 /**
  * @swagger
@@ -80,6 +81,7 @@ router.post(
   '/',
   productValidation.productValidationRules(),
   productValidation.ValidateProduct,
+  isAuthenticated,
   Util.handleErrors(productController.createOne),
 );
 
@@ -116,6 +118,7 @@ router.put(
   '/:id',
   productValidation.productValidationRules(),
   productValidation.ValidateProduct,
+  isAuthenticated,
   Util.handleErrors(productController.update),
 );
 
@@ -138,6 +141,10 @@ router.put(
  *       404:
  *         description: Oops! Product not found
  */
-router.delete('/:id', Util.handleErrors(productController.delete));
+router.delete(
+  '/:id',
+  isAuthenticated,
+  Util.handleErrors(productController.delete),
+);
 
 module.exports = router;
