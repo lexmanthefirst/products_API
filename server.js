@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 });
 
 // API routes
-app.use('/api/v1', routes);
+app.use('/api/shop/v1', routes);
 
 // Error handling and Swagger
 app.use(errorMiddleware);
@@ -49,17 +49,21 @@ async function startServer() {
   try {
     await connectDB();
     app.listen(PORT, () => {
-      console.log(`Server is running at http://localhost:${PORT}`);
-      console.log(`Swagger: http://localhost:${PORT}/api-docs`);
       console.log(
-        `GitHub OAuth callback: http://localhost:${PORT}/api/v1/auth/github/callback`,
+        `Server is running at https://products-api-5zdk.onrender.com`,
+      );
+      console.log(`Swagger: https://products-api-5zdk.onrender.com/api-docs`);
+      console.log(
+        `GitHub OAuth callback:https://products-api-5zdk.onrender.com/api/shop/v1/auth/github/callback`,
       );
       //logging in with github authentication
       console.log(
-        `Github Oauth login: http://localhost:${PORT}/api/v1/auth/github`,
+        `Github Oauth login: https://products-api-5zdk.onrender.com/api/shop/v1/auth/github`,
       );
       //Logging out
-      console.log(`Logout: http://localhost:${PORT}/api/v1/auth/logout`);
+      console.log(
+        `Logout: https://products-api-5zdk.onrender.com/api/shop/v1/auth/logout`,
+      );
     });
   } catch (error) {
     console.error('Failed to start server:', error);

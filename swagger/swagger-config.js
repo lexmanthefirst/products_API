@@ -16,7 +16,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000/api/v1',
+        url: 'https://products-api-5zdk.onrender.com/api/shop/v1',
       },
     ],
     components: {
@@ -30,14 +30,17 @@ const options = {
           type: 'oauth2',
           flows: {
             authorizationCode: {
-              authorizationUrl: 'http://localhost:3000/api/v1/auth/github',
-              tokenUrl: 'http://localhost:3000/api/v1/auth/github/callback',
+              authorizationUrl:
+                'https://products-api-5zdk.onrender.com/api/shop/v1/auth/github',
+              tokenUrl:
+                'https://products-api-5zdk.onrender.com/api/shop/v1/auth/github/callback',
               scopes: {
                 user: 'Access user profile',
                 products: 'Access product data',
                 categories: 'Access category data',
               },
-              refreshUrl: 'http://localhost:3000/api/v1/auth/github/callback',
+              refreshUrl:
+                'https://products-api-5zdk.onrender.com/api/shop/v1/auth/github/callback',
             },
           },
         },
@@ -46,7 +49,7 @@ const options = {
     security: [
       {
         GitHubOAuth: ['user'],
-      }
+      },
     ],
   },
   apis: ['./routes/*.js'],
@@ -65,9 +68,10 @@ module.exports = app => {
           clientSecret: process.env.GITHUB_CLIENT_SECRET,
           scopes: ['user'],
           usePkceWithAuthorizationCodeGrant: true,
-          redirectUrl: 'http://localhost:3000/api-docs/oauth2-redirect.html'
+          redirectUrl:
+            'https://products-api-5zdk.onrender.com/api-docs/oauth2-redirect.html',
         },
-        url: 'http://localhost:3000/api-docs.json'
+        url: 'https://products-api-5zdk.onrender.com/api-docs.json',
       },
     }),
   );

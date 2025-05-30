@@ -30,7 +30,7 @@ const config = {
   },
   servers: [
     {
-      url: 'http://localhost:3000/api/v1',
+      url: 'https://products-api-5zdk.onrender.com/api/shop/v1',
       description: 'Local server',
     },
   ],
@@ -41,9 +41,12 @@ const config = {
         type: 'oauth2',
         flows: {
           authorizationCode: {
-            authorizationUrl: 'http://localhost:3000/api/v1/auth/github',
-            tokenUrl: 'http://localhost:3000/api/v1/auth/github/callback',
-            refreshUrl: 'http://localhost:3000/api/v1/auth/github/callback',
+            authorizationUrl:
+              'https://products-api-5zdk.onrender.com/api/shop/v1/auth/github',
+            tokenUrl:
+              'https://products-api-5zdk.onrender.com/api/shop/v1/auth/github/callback',
+            refreshUrl:
+              'https://products-api-5zdk.onrender.com/api/shop/v1/auth/github/callback',
             scopes: {
               user: 'Access user data',
               products: 'Access product data',
