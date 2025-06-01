@@ -1,51 +1,58 @@
 const mongoose = require('mongoose');
+
 const userSchema = mongoose.Schema(
   {
+    // OAuth IDs (GitHub & Google)
+    githubId: {
+      type: String,
+      unique: true,
+      sparse: true, // Allows null for non-GitHub users
+    },
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true, // Allows null for non-Google users
+    },
+
+    // User details (now optional for OAuth)
     name: {
       type: String,
-      required: [true, 'Please enter a user name'],
       trim: true,
-      maxlenght: [50, 'User name cannot exceed 50 characters'],
+      maxlength: [50, 'Name cannot exceed 50 characters'],
     },
     email: {
       type: String,
-      required: [true, 'Please enter a user email'],
       unique: true,
       trim: true,
-      maxlenght: [50, 'User email cannot exceed 50 characters'],
+      maxlength: [50, 'Email cannot exceed 50 characters'],
     },
 
+    // Auth provider (github, google, or email)
+    provider: {
+      type: String,
+      enum: ['github', 'google', 'email'],
+      required: true,
+      default: 'email',
+    },
+
+    // Role (user or admin)
     role: {
       type: String,
       enum: ['user', 'admin'],
       default: 'user',
     },
+
+    // Address (optional)
     address: {
-      street: {
-        type: String,
-        required: [true, 'Please enter a street address'],
-      },
-      city: {
-        type: String,
-        required: [true, 'Please enter a city'],
-      },
-      state: {
-        type: String,
-        required: [true, 'Please enter a state'],
-      },
-      country: {
-        type: String,
-        required: [true, 'Please enter a country'],
-      },
-      zip: {
-        type: String,
-        required: [true, 'Please enter a zip code'],
-      },
+      street: { type: String },
+      city: { type: String },
+      state: { type: String },
+      country: { type: String },
+      zip: { type: String },
     },
   },
-  {
-    timestamps: true,
-  },
+  { timestamps: true },
 );
-const User = mongoose.model('users', userSchema);
+
+const User = mongoose.model('User', userSchema);
 module.exports = User;
