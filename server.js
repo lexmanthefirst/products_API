@@ -13,7 +13,7 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: 'https://products-api-5zdk.onrender.com',
     credentials: true,
   }),
 );
@@ -27,6 +27,11 @@ app.use(
     secret: process.env.SESSION_SECRET || 'fallback-secret',
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      collectionName: 'sessions',
+      ttl: 24 * 60 * 60, // 24 hours
+    }),
     cookie: {
       secure: process.env.NODE_ENV === 'production', // HTTPS-only in production
       httpOnly: true,
