@@ -2,7 +2,6 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
-const bodyParser = require('body-parser');
 const passport = require('./config/passport');
 const connectDB = require('./database/connect');
 const routes = require('./routes');
@@ -12,26 +11,39 @@ const setupSwagger = require('./swagger/swagger-config');
 const app = express();
 
 // Middleware
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
 app.use(
-  session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: true,
+  cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true,
   }),
 );
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Session configuration (use a proper secret in production)
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'fallback-secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production', // HTTPS-only in production
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    },
+  }),
+);
+
+// Initialize Passport and session
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Home route
 app.get('/', (req, res) => {
   res.send(
-    req.session.user
-      ? `Logged in as ${req.session.user.displayName}`
+    req.user
+      ? `Logged in as ${req.user.username || req.user.displayName}`
       : 'Logged Out',
   );
 });
@@ -49,24 +61,15 @@ async function startServer() {
   try {
     await connectDB();
     app.listen(PORT, () => {
-      console.log(
-        `Server is running at https://products-api-5zdk.onrender.com`,
-      );
-      console.log(`Swagger: https://products-api-5zdk.onrender.com/api-docs`);
-      console.log(
-        `GitHub OAuth callback:https://products-api-5zdk.onrender.com/api/shop/v1/auth/github/callback`,
-      );
-      //logging in with github authentication
-      console.log(
-        `Github Oauth login: https://products-api-5zdk.onrender.com/api/shop/v1/auth/github`,
-      );
-      //Logging out
-      console.log(
-        `Logout: https://products-api-5zdk.onrender.com/api/shop/v1/auth/logout`,
-      );
+      console.log(`Server running on: http://localhost:${PORT}`);
+      console.log(`Swagger UI: http://localhost:${PORT}/api-docs`);
+      if (process.env.NODE_ENV === 'production') {
+        console.log(`Production URL: https://products-api-5zdk.onrender.com`);
+      }
     });
   } catch (error) {
     console.error('Failed to start server:', error);
   }
 }
+
 startServer();

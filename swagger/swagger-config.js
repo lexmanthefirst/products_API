@@ -44,6 +44,24 @@ const options = {
             },
           },
         },
+        GoogleOAuth: {
+          type: 'oauth2',
+          flows: {
+            authorizationCode: {
+              authorizationUrl:
+                'https://products-api-5zdk.onrender.com/api/shop/v1/auth/google',
+              tokenUrl:
+                'https://products-api-5zdk.onrender.com/api/shop/v1/auth/google/callback',
+              scopes: {
+                user: 'Access user profile',
+                products: 'Access product data',
+                categories: 'Access category data',
+              },
+              refreshUrl:
+                'https://products-api-5zdk.onrender.com/api/shop/v1/auth/google/callback',
+            },
+          },
+        },
       },
     },
     security: [
@@ -71,6 +89,7 @@ module.exports = app => {
           redirectUrl:
             'https://products-api-5zdk.onrender.com/api-docs/oauth2-redirect.html',
         },
+
         url: 'https://products-api-5zdk.onrender.com/api-docs.json',
       },
     }),

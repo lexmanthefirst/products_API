@@ -55,11 +55,32 @@ const config = {
           },
         },
       },
+      GoogleOauth: {
+        type: 'oauth2',
+        flows: {
+          authorizationCode: {
+            authorizationUrl:
+              'https://products-api-5zdk.onrender.com/api/shop/v1/auth/google',
+            tokenUrl:
+              'https://products-api-5zdk.onrender.com/api/shop/v1/auth/google/callback',
+            refreshUrl:
+              'https://products-api-5zdk.onrender.com/api/shop/v1/auth/google/callback',
+            scopes: {
+              user: 'Access user data',
+              products: 'Access product data',
+              categories: 'Access category data',
+            },
+          },
+        },
+      },
     },
   },
   security: [
     {
       GitHubOauth: ['user'],
+    },
+    {
+      GoogleOauth: ['user'],
     },
   ],
 };

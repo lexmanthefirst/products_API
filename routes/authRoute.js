@@ -2,9 +2,37 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 
+/**
+ * @swagger
+ * /auth/github:
+ *   get:
+ *     tags: [Auth]
+ *     summary: Login with GitHub (OAuth2)
+ *     description: Initiates GitHub OAuth2 flow
+ *     security:
+ *       - GitHubOAuth: []  # Reference the security scheme
+ *     responses:
+ *       302:
+ *         description: Redirects to GitHub for authentication
+ */
 //login with GitHub
 router.get('/github', passport.authenticate('github'));
 
+/**
+ * @swagger
+ * /auth/google:
+ *   get:
+ *     tags: [Auth]
+ *     summary: Login with Google (OAuth2)
+ *     description: Initiates Google OAuth2 flow
+ *     security:
+ *       - GoogleOAuth: []  # Reference the security scheme
+ *     responses:
+ *       302:
+ *         description: Redirects to Google for authentication
+ */
+//login with Google
+router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 /**
  * @swagger
  * /auth/github/callback:
@@ -35,6 +63,35 @@ router.get(
   },
 );
 
+/**
+ * @swagger
+ * /auth/google/callback:
+ *   get:
+ *     tags: [Auth]
+ *     summary: Google OAuth2 Callback
+ *     description: Handles the OAuth2 callback from Google
+ *     parameters:
+ *       - in: query
+ *         name: code
+ *         schema:
+ *           type: string
+ *         description: Authorization code from Google
+ *     responses:
+ *       302:
+ *         description: Redirects to homepage on success
+ */
+// Google OAuth callback
+router.get(
+  '/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: '/api-docs',
+    session: false,
+  }),
+  (req, res) => {
+    req.session.user = req.user;
+    res.redirect('/');
+  },
+);
 /**
  * @swagger
  * /auth/logout:
