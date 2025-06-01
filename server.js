@@ -7,6 +7,7 @@ const connectDB = require('./database/connect');
 const routes = require('./routes');
 const errorMiddleware = require('./middleware/errorMiddleware');
 const setupSwagger = require('./swagger/swagger-config');
+const MongoStore = require('connect-mongo');
 
 const app = express();
 
