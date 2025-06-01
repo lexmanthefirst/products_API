@@ -41,14 +41,16 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, done) => {
+      const email =
+        profile.emails?.[0]?.value || `google-${profile.id}@placeholder.com`; // Get the first email or null
       try {
         // Check if user exists or create a new one
         let user = await User.findOne({ googleId: profile.id });
         if (!user) {
           user = await User.create({
             googleId: profile.id,
-            username: profile.displayName,
-            email: profile.emails?.[0]?.value,
+            name: profile.displayName,
+            email,
             provider: 'google',
           });
         }
