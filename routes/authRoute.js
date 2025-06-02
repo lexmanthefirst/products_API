@@ -32,7 +32,10 @@ router.get('/github', passport.authenticate('github'));
  *         description: Redirects to Google for authentication
  */
 //login with Google
-router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
+);
 /**
  * @swagger
  * /auth/github/callback:
@@ -55,10 +58,8 @@ router.get(
   '/github/callback',
   passport.authenticate('github', {
     failureRedirect: '/api-docs',
-    session: false,
   }),
   (req, res) => {
-    req.session.user = req.user;
     res.redirect('/');
   },
 );
@@ -85,10 +86,8 @@ router.get(
   '/google/callback',
   passport.authenticate('google', {
     failureRedirect: '/api-docs',
-    session: false,
   }),
   (req, res) => {
-    req.session.user = req.user;
     res.redirect('/');
   },
 );
