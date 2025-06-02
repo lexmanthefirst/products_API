@@ -1,51 +1,69 @@
-//User schema
+// swagger/schemas/userSchema.js
 module.exports = {
   type: 'object',
   properties: {
     _id: {
       type: 'string',
-      description: 'The auto-generated id of the user',
+      description: 'The auto-generated ID of the user',
       readOnly: true,
     },
     name: {
       type: 'string',
-      description: 'The name of the user',
+      description: 'Full name of the user',
       example: 'Solomon Grundy',
     },
     email: {
       type: 'string',
-      description: 'Email of the user',
-      example: 'exaple@user.com',
+      description: 'Email address of the user',
+      example: 'example@user.com',
+    },
+    provider: {
+      type: 'string',
+      enum: ['google', 'github', 'email'],
+      description: 'The authentication provider for the user',
+      example: 'google',
     },
     role: {
       type: 'string',
       enum: ['user', 'admin'],
-      description: 'The role of the user',
+      description: 'User role in the system',
       example: 'user',
+    },
+    githubId: {
+      type: 'string',
+      description: 'GitHub OAuth ID (if authenticated via GitHub)',
+      example: '9876543210',
+      nullable: true,
+    },
+    googleId: {
+      type: 'string',
+      description: 'Google OAuth ID (if authenticated via Google)',
+      example: '10987654321',
+      nullable: true,
     },
     address: {
       type: 'object',
+      description: 'Optional user address',
       properties: {
-        street: { type: 'string' },
-        city: { type: 'string' },
-        state: { type: 'string' },
-        zip: { type: 'string' },
-        country: { type: 'string' },
+        street: { type: 'string', example: '123 Applebay Street' },
+        city: { type: 'string', example: 'Gotham' },
+        state: { type: 'string', example: 'New York' },
+        zip: { type: 'string', example: '10001' },
+        country: { type: 'string', example: 'USA' },
       },
-      example: '123 Applebay street',
     },
     createdAt: {
       type: 'string',
       format: 'date-time',
-      description: 'The date the user was created',
       readOnly: true,
+      description: 'Timestamp when the user was created',
     },
     updatedAt: {
       type: 'string',
       format: 'date-time',
-      description: 'The date the user was last updated',
       readOnly: true,
+      description: 'Timestamp when the user was last updated',
     },
   },
-  required: ['name', 'email', 'address'],
+  required: ['name', 'email', 'provider'],
 };

@@ -2,27 +2,31 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const passport = require('./config/passport');
 const connectDB = require('./database/connect');
 const routes = require('./routes');
 const errorMiddleware = require('./middleware/errorMiddleware');
 const setupSwagger = require('./swagger/swagger-config');
-const MongoStore = require('connect-mongo');
 
 const app = express();
 
-// Middleware
+// Trust proxy for secure cookies behind Render's proxy
+app.set('trust proxy', 1);
+
+// CORS configuration
 app.use(
   cors({
     origin: 'https://products-api-5zdk.onrender.com',
-    credentials: true,
+    credentials: true, //
   }),
 );
 
+// Body parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session configuration (use a proper secret in production)
+// Session config (with MongoDB)
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'fallback-secret',
@@ -31,27 +35,32 @@ app.use(
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
       collectionName: 'sessions',
-      ttl: 24 * 60 * 60, // 24 hours
+      ttl: 24 * 60 * 60,
     }),
     cookie: {
-      secure: process.env.NODE_ENV === 'production', // HTTPS-only in production
+      secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      maxAge: 24 * 60 * 60 * 1000,
     },
   }),
 );
 
-// Initialize Passport and session
+// Passport setup
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Home route
+// Home route (for session testing)
 app.get('/', (req, res) => {
   if (req.user) {
-    console.log(`User ${req.user.username || req.user.name} is logged in`);
+    console.log(
+      `User ${
+        req.user.username || req.user.name || req.user.displayName
+      } is logged in`,
+    );
   } else {
     console.log('No user is logged in');
   }
+
   res.send(
     req.user
       ? `Logged in as ${
@@ -67,12 +76,13 @@ app.get('/', (req, res) => {
 // API routes
 app.use('/api/shop/v1', routes);
 
-// Error handling and Swagger
-app.use(errorMiddleware);
+// Swagger UI and error middleware
 setupSwagger(app);
+app.use(errorMiddleware);
 
-// Start server
+// Server startup
 const PORT = process.env.PORT || 8080;
+
 async function startServer() {
   try {
     await connectDB();
