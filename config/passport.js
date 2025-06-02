@@ -64,7 +64,7 @@ passport.use(
 
 // Serialize user (store user.id in session)
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user._id);
 });
 
 // Deserialize user (retrieve user from DB using id)
