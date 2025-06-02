@@ -58,8 +58,10 @@ router.get(
   '/github/callback',
   passport.authenticate('github', {
     failureRedirect: '/api-docs',
+    session: true,
   }),
   (req, res) => {
+    req.session.user = req.user;
     res.redirect('/');
   },
 );
@@ -86,8 +88,10 @@ router.get(
   '/google/callback',
   passport.authenticate('google', {
     failureRedirect: '/api-docs',
+    session: true,
   }),
   (req, res) => {
+    req.session.user = req.user;
     res.redirect('/');
   },
 );
