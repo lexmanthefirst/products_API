@@ -14,18 +14,24 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        // Check if user exists or create a new one
+        const email =
+          profile.emails?.[0]?.value || `github-${profile.id}@placeholder.com`;
+
         let user = await User.findOne({ githubId: profile.id });
+
         if (!user) {
           user = await User.create({
             githubId: profile.id,
-            username: profile.username || profile.displayName,
-            email: profile.emails?.[0]?.value,
+            name: profile.displayName || profile.username,
+            email,
             provider: 'github',
           });
+          console.log('New GitHub user created:', user.name);
         }
+
         return done(null, user);
       } catch (error) {
+        console.error('GitHub OAuth error:', error);
         return done(error, null);
       }
     },
@@ -33,7 +39,7 @@ passport.use(
 );
 
 // Google OAuth Strategy
-passport.use(
+ppassport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
@@ -41,11 +47,12 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, done) => {
-      const email =
-        profile.emails?.[0]?.value || `google-${profile.id}@placeholder.com`; // Get the first email or null
       try {
-        // Check if user exists or create a new one
+        const email =
+          profile.emails?.[0]?.value || `google-${profile.id}@placeholder.com`;
+
         let user = await User.findOne({ googleId: profile.id });
+
         if (!user) {
           user = await User.create({
             googleId: profile.id,
@@ -53,9 +60,12 @@ passport.use(
             email,
             provider: 'google',
           });
+          console.log('New Google user created:', user.name);
         }
+
         return done(null, user);
       } catch (error) {
+        console.error('Google OAuth error:', error);
         return done(error, null);
       }
     },

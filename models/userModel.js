@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     // OAuth IDs (GitHub & Google)
     githubId: {
       type: String,
       unique: true,
-      sparse: true, // Allows null for non-GitHub users
+      sparse: true,
     },
     googleId: {
       type: String,
       unique: true,
-      sparse: true, // Allows null for non-Google users
+      sparse: true,
     },
 
-    // User details (now optional for OAuth)
+    // Basic user details
     name: {
       type: String,
       trim: true,
@@ -25,30 +25,35 @@ const userSchema = mongoose.Schema(
       unique: true,
       sparse: true,
       trim: true,
+      lowercase: true,
       maxlength: [50, 'Email cannot exceed 50 characters'],
+      match: [
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+        'Please provide a valid email address',
+      ],
     },
 
-    // Auth provider (github, google, or email)
+    // Source of authentication
     provider: {
       type: String,
       enum: ['github', 'google', 'email'],
-      required: true,
+      required: [true, 'Provider is required'],
     },
 
-    // Role (user or admin)
+    // User role
     role: {
       type: String,
       enum: ['user', 'admin'],
       default: 'user',
     },
 
-    // Address (optional)
+    // Optional address
     address: {
-      street: { type: String },
-      city: { type: String },
-      state: { type: String },
-      country: { type: String },
-      zip: { type: String },
+      street: { type: String, trim: true },
+      city: { type: String, trim: true },
+      state: { type: String, trim: true },
+      country: { type: String, trim: true },
+      zip: { type: String, trim: true },
     },
   },
   { timestamps: true },
