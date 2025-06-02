@@ -39,7 +39,7 @@ passport.use(
 );
 
 // Google OAuth Strategy
-ppassport.use(
+passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
