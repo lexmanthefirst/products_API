@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema(
     githubId: {
       type: String,
       unique: true,
-      sparse: true, // Allows nulls (not required for everyone)
+      sparse: true,
     },
     googleId: {
       type: String,
