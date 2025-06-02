@@ -33,7 +33,6 @@ const userSchema = mongoose.Schema(
       type: String,
       enum: ['github', 'google', 'email'],
       required: true,
-      default: 'email',
     },
 
     // Role (user or admin)

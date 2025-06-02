@@ -47,9 +47,19 @@ app.use(passport.session());
 
 // Home route
 app.get('/', (req, res) => {
+  if (req.user) {
+    console.log(`User ${req.user.username || req.user.name} is logged in`);
+  } else {
+    console.log('No user is logged in');
+  }
   res.send(
     req.user
-      ? `Logged in as ${req.user.username || req.user.displayName}`
+      ? `Logged in as ${
+          req.user.username ||
+          req.user.name ||
+          req.user.displayName ||
+          'Unknown'
+        }`
       : 'Logged Out',
   );
 });
